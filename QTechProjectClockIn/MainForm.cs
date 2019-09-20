@@ -16,7 +16,6 @@ namespace QTechProjectClockIn
         private string originalFolderPath = @"C:\Project Clocker Logs";
         private string dateNow;
         private string filePath;
-        private string newLog;
         private ProjCompare projCompare = new ProjCompare();
         private List<Entry> entries = new List<Entry>();
         private Entry curEntry;
@@ -33,24 +32,40 @@ namespace QTechProjectClockIn
             dateNow = DateTime.Now.ToString("ddMMyyyy");
             filePath = @"C:\Project Clocker Logs\" + dateNow + ".txt";
             if (btn_OUT.Enabled)
+            {
                 btn_OUT.Enabled = false;
+                btn_OUT.FlatAppearance.BorderColor = Color.LightGray;
+            }
 
             if (btn_IN.Enabled)
+            {
                 btn_IN.Enabled = false;
+                btn_IN.FlatAppearance.BorderColor = Color.LightGray;
+            }
 
             // Checks if the text box is empty
             if (!String.IsNullOrEmpty(projNum_Txt.Text))
             {
                 btn_IN.Enabled = true;
+                btn_IN.FlatAppearance.BorderColor = Color.Black;
             }
 
-            // Checks if the current project has already been clocked IN
-            string[] lines = File.ReadAllLines(filePath);
-            string[] filteredLines = Array.FindAll(lines, l => l.Contains(projNum_Txt.Text));
-            if (filteredLines.Length != 0 && filteredLines.Last().Contains("IN"))
+            if (curEntry != null)
             {
-                btn_IN.Enabled = false;
-                btn_OUT.Enabled = true;
+                if (curEntry.ProjCode == projNum_Txt.Text)
+                {
+                    btn_IN.Enabled = false;
+                    btn_IN.FlatAppearance.BorderColor = Color.LightGray;
+                    btn_OUT.Enabled = true;
+                    btn_OUT.FlatAppearance.BorderColor = Color.Black;
+                }
+                else
+                {
+                    btn_IN.Enabled = true;
+                    btn_IN.FlatAppearance.BorderColor = Color.Black;
+                    btn_OUT.Enabled = false;
+                    btn_OUT.FlatAppearance.BorderColor = Color.LightGray;
+                }
             }
         }
 
@@ -59,17 +74,54 @@ namespace QTechProjectClockIn
         //================================================================================================================================================//
         private void Btn_IN_Click(object sender, EventArgs e)
         {
-            Entry newEntry = new Entry();
-            entries.Add(newEntry);
-            dateNow = DateTime.Now.ToString("ddMMyyyy");
-            filePath = @"C:\Project Clocker Logs\" + dateNow + ".txt";
-            newEntry.InInfo = "IN  " + DateTime.Now.ToString("HH:mm") + " " + projNum_Txt.Text;
-            newEntry.IsOpen = true;
-            StreamWriter sb = new StreamWriter(filePath, true);
-            sb.WriteLine(newEntry.InInfo);
-            sb.Close();
-            btn_IN.Enabled = false;
-            btn_OUT.Enabled = true;
+            bool entryIsOpen = false;
+            StringBuilder stringBuilder = new StringBuilder();
+            foreach (Entry item in entries)
+            {
+                string[] tempStrArr = item.InInfo.Trim().Split(null);
+                if (item.IsOpen)
+                {
+                    entryIsOpen = true;
+                    stringBuilder.Append(" " + tempStrArr.Last());
+                }
+            }
+
+            if (entryIsOpen)
+            {
+                DialogResult dialog = MessageBox.Show("The following project was not closed:" + stringBuilder.ToString() + "\nDo you wish to close it?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                if (dialog == DialogResult.Yes)
+                {
+                    foreach (Entry item in entries)
+                    {
+                        string[] tempStrArr = item.InInfo.Trim().Split(null);
+                        if (item.IsOpen)
+                        {
+                            item.OutInfo = "OUT " + DateTime.Now.ToString("HH:mm") + " " + tempStrArr.Last();
+                            item.IsOpen = false;
+                            StreamWriter sw = new StreamWriter(filePath, true);
+                            sw.WriteLine(item.OutInfo);
+                            sw.Close();
+                        }
+                    }
+                }
+            }
+            else
+            {
+                curEntry = new Entry(projNum_Txt.Text);
+                entries.Add(curEntry);
+                dateNow = DateTime.Now.ToString("ddMMyyyy");
+                filePath = @"C:\Project Clocker Logs\" + dateNow + ".txt";
+                curEntry.InInfo = "IN  " + DateTime.Now.ToString("HH:mm") + " " + projNum_Txt.Text;
+                curEntry.IsOpen = true;
+                StreamWriter sb = new StreamWriter(filePath, true);
+                sb.WriteLine(curEntry.InInfo);
+                sb.Close();
+                btn_IN.Enabled = false;
+                btn_IN.FlatAppearance.BorderColor = Color.LightGray;
+                btn_OUT.Enabled = true;
+                btn_OUT.FlatAppearance.BorderColor = Color.Black;
+            }
+            
         }
 
         //================================================================================================================================================//
@@ -96,7 +148,9 @@ namespace QTechProjectClockIn
                 sb.WriteLine(curEntry.OutInfo);
                 sb.Close();
                 btn_OUT.Enabled = false;
+                btn_OUT.FlatAppearance.BorderColor = Color.LightGray;
                 btn_IN.Enabled = true;
+                btn_IN.FlatAppearance.BorderColor = Color.Black;
                 entries.Remove(curEntry);
             }
             else
@@ -105,7 +159,9 @@ namespace QTechProjectClockIn
                 sb.WriteLine("OUT " + DateTime.Now.ToString("HH:mm") + " " + projNum_Txt.Text);
                 sb.Close();
                 btn_OUT.Enabled = false;
+                btn_OUT.FlatAppearance.BorderColor = Color.LightGray;
                 btn_IN.Enabled = true;
+                btn_IN.FlatAppearance.BorderColor = Color.Black;
             }
         }
 
@@ -129,31 +185,6 @@ namespace QTechProjectClockIn
                 sb.WriteLine("===============================================");
                 sb.Close();
             }
-            //SortTextFile();
-        }
-
-        //================================================================================================================================================//
-        // SORT TEXT FILE                                                                                                                                 //
-        //================================================================================================================================================//
-        private void SortTextFile()
-        {
-            
-            dateNow = DateTime.Now.ToString("ddMMyyyy");
-            filePath = @"C:\Project Clocker Logs\" + dateNow + ".txt";
-            var contents = File.ReadAllLines(filePath);
-            if (contents.Length != 0)
-            {
-                var contentList = new List<string>(contents);
-                contentList.RemoveAt(0);
-                contentList.RemoveAt(1);
-                contentList.RemoveAt(2);
-                contentList.Sort(projCompare);
-                StreamWriter sb = new StreamWriter(filePath, true);
-                foreach (var item in contentList)
-                    sb.WriteLine(item);
-                sb.Close();
-            }
-            
         }
 
         //================================================================================================================================================//
@@ -177,8 +208,8 @@ namespace QTechProjectClockIn
 
             if (entryIsOpen)
             {
-                DialogResult dialog = MessageBox.Show("The following projects were not closed:" + sb.ToString() + "\nDo you wish to close them?", "Warning", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
-                if (dialog == DialogResult.Yes)
+                DialogResult dialog = MessageBox.Show("The following project was not closed:" + sb.ToString() + "\nDo you wish to close it?", "Warning", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
+                if (dialog == DialogResult.OK)
                 {
                     foreach (Entry item in entries)
                     {
@@ -193,11 +224,32 @@ namespace QTechProjectClockIn
                         }
                     }
                 }
-                else if (dialog == DialogResult.No)
-                    e.Cancel = false;
                 else if (dialog == DialogResult.Cancel)
                     e.Cancel = true;
             }
+        }
+
+        //================================================================================================================================================//
+        // IN & OUT BUTTON COLOR CHANGE ON ENTER AND LEAVE                                                                                                //
+        //================================================================================================================================================//
+        private void Btn_IN_MouseEnter(object sender, EventArgs e)
+        {
+            btn_IN.ForeColor = Color.White;
+        }
+
+        private void Btn_IN_MouseLeave(object sender, EventArgs e)
+        {
+            btn_IN.ForeColor = Color.FromArgb(64, 64, 64);
+        }
+
+        private void Btn_OUT_MouseEnter(object sender, EventArgs e)
+        {
+            btn_OUT.ForeColor = Color.White;
+        }
+
+        private void Btn_OUT_MouseLeave(object sender, EventArgs e)
+        {
+            btn_OUT.ForeColor = Color.FromArgb(64, 64, 64);
         }
     }
 

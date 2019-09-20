@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.btn_IN = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -40,7 +41,7 @@
             // btn_IN
             // 
             this.btn_IN.Enabled = false;
-            this.btn_IN.FlatAppearance.BorderSize = 0;
+            this.btn_IN.FlatAppearance.BorderColor = System.Drawing.Color.LightGray;
             this.btn_IN.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(91)))), ((int)(((byte)(142)))));
             this.btn_IN.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(19)))), ((int)(((byte)(118)))), ((int)(((byte)(188)))));
             this.btn_IN.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -53,6 +54,8 @@
             this.btn_IN.Text = "IN";
             this.btn_IN.UseVisualStyleBackColor = true;
             this.btn_IN.Click += new System.EventHandler(this.Btn_IN_Click);
+            this.btn_IN.MouseEnter += new System.EventHandler(this.Btn_IN_MouseEnter);
+            this.btn_IN.MouseLeave += new System.EventHandler(this.Btn_IN_MouseLeave);
             // 
             // label1
             // 
@@ -99,7 +102,7 @@
             // btn_OUT
             // 
             this.btn_OUT.Enabled = false;
-            this.btn_OUT.FlatAppearance.BorderSize = 0;
+            this.btn_OUT.FlatAppearance.BorderColor = System.Drawing.Color.LightGray;
             this.btn_OUT.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(91)))), ((int)(((byte)(142)))));
             this.btn_OUT.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(19)))), ((int)(((byte)(118)))), ((int)(((byte)(188)))));
             this.btn_OUT.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -112,6 +115,8 @@
             this.btn_OUT.Text = "OUT";
             this.btn_OUT.UseVisualStyleBackColor = true;
             this.btn_OUT.Click += new System.EventHandler(this.Btn_OUT_Click);
+            this.btn_OUT.MouseEnter += new System.EventHandler(this.Btn_OUT_MouseEnter);
+            this.btn_OUT.MouseLeave += new System.EventHandler(this.Btn_OUT_MouseLeave);
             // 
             // MainForm
             // 
@@ -123,6 +128,7 @@
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btn_IN);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MaximumSize = new System.Drawing.Size(368, 218);
             this.MinimizeBox = false;
