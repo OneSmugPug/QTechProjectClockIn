@@ -123,8 +123,13 @@
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btn_IN);
+            this.MaximizeBox = false;
+            this.MaximumSize = new System.Drawing.Size(368, 218);
+            this.MinimizeBox = false;
+            this.MinimumSize = new System.Drawing.Size(368, 218);
             this.Name = "MainForm";
             this.Text = "Project Time Clocker";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
