@@ -51,6 +51,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DBConnection.cs" />
+    <Compile Include="DBUtils.cs" />
     <Compile Include="Entry.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>

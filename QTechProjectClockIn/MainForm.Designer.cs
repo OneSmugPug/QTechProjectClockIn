@@ -31,11 +31,8 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.btn_IN = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.bunifuSeparator1 = new Bunifu.Framework.UI.BunifuSeparator();
-            this.projNum_Txt = new System.Windows.Forms.TextBox();
             this.btn_OUT = new System.Windows.Forms.Button();
-            this.panel1.SuspendLayout();
+            this.projNumDrp = new Bunifu.Framework.UI.BunifuDropdown();
             this.SuspendLayout();
             // 
             // btn_IN
@@ -67,38 +64,6 @@
             this.label1.TabIndex = 2;
             this.label1.Text = "Project Number:";
             // 
-            // panel1
-            // 
-            this.panel1.Controls.Add(this.bunifuSeparator1);
-            this.panel1.Controls.Add(this.projNum_Txt);
-            this.panel1.Location = new System.Drawing.Point(150, 51);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(149, 25);
-            this.panel1.TabIndex = 3;
-            // 
-            // bunifuSeparator1
-            // 
-            this.bunifuSeparator1.BackColor = System.Drawing.Color.Transparent;
-            this.bunifuSeparator1.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(105)))), ((int)(((byte)(105)))), ((int)(((byte)(105)))));
-            this.bunifuSeparator1.LineThickness = 1;
-            this.bunifuSeparator1.Location = new System.Drawing.Point(-1, 18);
-            this.bunifuSeparator1.Name = "bunifuSeparator1";
-            this.bunifuSeparator1.Size = new System.Drawing.Size(150, 10);
-            this.bunifuSeparator1.TabIndex = 1;
-            this.bunifuSeparator1.Transparency = 255;
-            this.bunifuSeparator1.Vertical = false;
-            // 
-            // projNum_Txt
-            // 
-            this.projNum_Txt.BackColor = System.Drawing.Color.LightGray;
-            this.projNum_Txt.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.projNum_Txt.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.projNum_Txt.Location = new System.Drawing.Point(2, 3);
-            this.projNum_Txt.Name = "projNum_Txt";
-            this.projNum_Txt.Size = new System.Drawing.Size(149, 16);
-            this.projNum_Txt.TabIndex = 0;
-            this.projNum_Txt.TextChanged += new System.EventHandler(this.ProjNum_Txt_TextChanged);
-            // 
             // btn_OUT
             // 
             this.btn_OUT.Enabled = false;
@@ -118,14 +83,30 @@
             this.btn_OUT.MouseEnter += new System.EventHandler(this.Btn_OUT_MouseEnter);
             this.btn_OUT.MouseLeave += new System.EventHandler(this.Btn_OUT_MouseLeave);
             // 
+            // projNumDrp
+            // 
+            this.projNumDrp.BackColor = System.Drawing.Color.Transparent;
+            this.projNumDrp.BorderRadius = 3;
+            this.projNumDrp.DisabledColor = System.Drawing.Color.Gray;
+            this.projNumDrp.ForeColor = System.Drawing.Color.Black;
+            this.projNumDrp.Items = new string[0];
+            this.projNumDrp.Location = new System.Drawing.Point(152, 50);
+            this.projNumDrp.Name = "projNumDrp";
+            this.projNumDrp.NomalColor = System.Drawing.Color.White;
+            this.projNumDrp.onHoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(129)))), ((int)(((byte)(77)))));
+            this.projNumDrp.selectedIndex = -1;
+            this.projNumDrp.Size = new System.Drawing.Size(170, 31);
+            this.projNumDrp.TabIndex = 5;
+            this.projNumDrp.onItemSelected += new System.EventHandler(this.ProjNumDrp_onItemSelected);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.LightGray;
             this.ClientSize = new System.Drawing.Size(352, 179);
+            this.Controls.Add(this.projNumDrp);
             this.Controls.Add(this.btn_OUT);
-            this.Controls.Add(this.panel1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btn_IN);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -137,8 +118,6 @@
             this.Text = "Project Time Clocker";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.Load += new System.EventHandler(this.MainForm_Load);
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -148,10 +127,8 @@
 
         private System.Windows.Forms.Button btn_IN;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Panel panel1;
-        private Bunifu.Framework.UI.BunifuSeparator bunifuSeparator1;
-        private System.Windows.Forms.TextBox projNum_Txt;
         private System.Windows.Forms.Button btn_OUT;
+        private Bunifu.Framework.UI.BunifuDropdown projNumDrp;
     }
 }
 

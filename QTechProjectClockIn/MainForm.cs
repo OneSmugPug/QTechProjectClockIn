@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Data.SqlClient;
 
 namespace QTechProjectClockIn
 {
@@ -19,54 +20,13 @@ namespace QTechProjectClockIn
         private ProjCompare projCompare = new ProjCompare();
         private List<Entry> entries = new List<Entry>();
         private Entry curEntry;
+        private DataTable dt;
         public MainForm()
         {
             InitializeComponent();
-        }
-
-        //================================================================================================================================================//
-        // PROJECT NUMBER TEXTBOX                                                                                                                         //
-        //================================================================================================================================================//
-        private void ProjNum_Txt_TextChanged(object sender, EventArgs e)
-        {
+            PopulateDropDown();
             dateNow = DateTime.Now.ToString("ddMMyyyy");
             filePath = @"C:\Project Clocker Logs\" + dateNow + ".txt";
-            if (btn_OUT.Enabled)
-            {
-                btn_OUT.Enabled = false;
-                btn_OUT.FlatAppearance.BorderColor = Color.LightGray;
-            }
-
-            if (btn_IN.Enabled)
-            {
-                btn_IN.Enabled = false;
-                btn_IN.FlatAppearance.BorderColor = Color.LightGray;
-            }
-
-            // Checks if the text box is empty
-            if (!String.IsNullOrEmpty(projNum_Txt.Text))
-            {
-                btn_IN.Enabled = true;
-                btn_IN.FlatAppearance.BorderColor = Color.Black;
-            }
-
-            if (curEntry != null)
-            {
-                if (curEntry.ProjCode == projNum_Txt.Text)
-                {
-                    btn_IN.Enabled = false;
-                    btn_IN.FlatAppearance.BorderColor = Color.LightGray;
-                    btn_OUT.Enabled = true;
-                    btn_OUT.FlatAppearance.BorderColor = Color.Black;
-                }
-                else
-                {
-                    btn_IN.Enabled = true;
-                    btn_IN.FlatAppearance.BorderColor = Color.Black;
-                    btn_OUT.Enabled = false;
-                    btn_OUT.FlatAppearance.BorderColor = Color.LightGray;
-                }
-            }
         }
 
         //================================================================================================================================================//
@@ -107,11 +67,11 @@ namespace QTechProjectClockIn
             }
             else
             {
-                curEntry = new Entry(projNum_Txt.Text);
+                curEntry = new Entry(projNumDrp.selectedValue);
                 entries.Add(curEntry);
                 dateNow = DateTime.Now.ToString("ddMMyyyy");
                 filePath = @"C:\Project Clocker Logs\" + dateNow + ".txt";
-                curEntry.InInfo = "IN  " + DateTime.Now.ToString("HH:mm") + " " + projNum_Txt.Text;
+                curEntry.InInfo = "IN  " + DateTime.Now.ToString("HH:mm") + " " + projNumDrp.selectedValue;
                 curEntry.IsOpen = true;
                 StreamWriter sb = new StreamWriter(filePath, true);
                 sb.WriteLine(curEntry.InInfo);
@@ -134,7 +94,7 @@ namespace QTechProjectClockIn
             foreach (Entry item in entries)
             {
                 string[] strArr = item.InInfo.Trim().Split(null);
-                if (strArr.Last().Equals(projNum_Txt.Text))
+                if (strArr.Last().Equals(projNumDrp.selectedValue))
                 {
                     curEntry = item;
                 }
@@ -142,7 +102,7 @@ namespace QTechProjectClockIn
 
             if (curEntry != null)
             {
-                curEntry.OutInfo = "OUT " + DateTime.Now.ToString("HH:mm") + " " + projNum_Txt.Text;
+                curEntry.OutInfo = "OUT " + DateTime.Now.ToString("HH:mm") + " " + projNumDrp.selectedValue;
                 curEntry.IsOpen = false;
                 StreamWriter sb = new StreamWriter(filePath, true);
                 sb.WriteLine(curEntry.OutInfo);
@@ -156,7 +116,7 @@ namespace QTechProjectClockIn
             else
             {
                 StreamWriter sb = new StreamWriter(filePath, true);
-                sb.WriteLine("OUT " + DateTime.Now.ToString("HH:mm") + " " + projNum_Txt.Text);
+                sb.WriteLine("OUT " + DateTime.Now.ToString("HH:mm") + " " + projNumDrp.selectedValue);
                 sb.Close();
                 btn_OUT.Enabled = false;
                 btn_OUT.FlatAppearance.BorderColor = Color.LightGray;
@@ -251,6 +211,61 @@ namespace QTechProjectClockIn
         {
             btn_OUT.ForeColor = Color.FromArgb(64, 64, 64);
         }
+
+        //================================================================================================================================================//
+        // DROPDOWN CODE                                                                                                                                  //
+        //================================================================================================================================================//
+
+        private void PopulateDropDown()
+        {
+            using (SqlConnection conn = DBUtils.GetDBConnection())
+            {
+                conn.Open();
+                SqlDataAdapter da = new SqlDataAdapter("SELECT Project_ID FROM Projects", conn);
+                dt = new DataTable();
+                da.Fill(dt);
+                foreach (DataRow row in dt.Rows)
+                {
+                    projNumDrp.AddItem(row["Project_ID"].ToString());
+                }
+            }
+        }
+
+        private void ProjNumDrp_onItemSelected(object sender, EventArgs e)
+        {
+            if (btn_OUT.Enabled)
+            {
+                btn_OUT.Enabled = false;
+                btn_OUT.FlatAppearance.BorderColor = Color.LightGray;
+            }
+
+            if (btn_IN.Enabled)
+            {
+                btn_IN.Enabled = false;
+                btn_IN.FlatAppearance.BorderColor = Color.LightGray;
+            }
+
+            btn_IN.Enabled = true;
+            btn_IN.FlatAppearance.BorderColor = Color.Black;
+
+            if (curEntry != null)
+            {
+                if (curEntry.ProjCode == projNumDrp.selectedValue)
+                {
+                    btn_IN.Enabled = false;
+                    btn_IN.FlatAppearance.BorderColor = Color.LightGray;
+                    btn_OUT.Enabled = true;
+                    btn_OUT.FlatAppearance.BorderColor = Color.Black;
+                }
+                else
+                {
+                    btn_IN.Enabled = true;
+                    btn_IN.FlatAppearance.BorderColor = Color.Black;
+                    btn_OUT.Enabled = false;
+                    btn_OUT.FlatAppearance.BorderColor = Color.LightGray;
+                }
+            }
+        }
     }
 
     //================================================================================================================================================//
@@ -265,5 +280,5 @@ namespace QTechProjectClockIn
 
             return xStrArr.Last().CompareTo(yStrArr.Last());
         }
-    }
+    } 
 }
