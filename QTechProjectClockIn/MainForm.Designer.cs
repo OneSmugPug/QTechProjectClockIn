@@ -44,7 +44,7 @@
             this.btn_IN.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btn_IN.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btn_IN.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.btn_IN.Location = new System.Drawing.Point(93, 118);
+            this.btn_IN.Location = new System.Drawing.Point(210, 118);
             this.btn_IN.Name = "btn_IN";
             this.btn_IN.Size = new System.Drawing.Size(70, 30);
             this.btn_IN.TabIndex = 0;
@@ -73,7 +73,7 @@
             this.btn_OUT.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btn_OUT.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btn_OUT.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.btn_OUT.Location = new System.Drawing.Point(187, 118);
+            this.btn_OUT.Location = new System.Drawing.Point(339, 118);
             this.btn_OUT.Name = "btn_OUT";
             this.btn_OUT.Size = new System.Drawing.Size(70, 30);
             this.btn_OUT.TabIndex = 4;
@@ -93,9 +93,9 @@
             this.projNumDrp.Location = new System.Drawing.Point(152, 50);
             this.projNumDrp.Name = "projNumDrp";
             this.projNumDrp.NomalColor = System.Drawing.Color.White;
-            this.projNumDrp.onHoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(129)))), ((int)(((byte)(77)))));
+            this.projNumDrp.onHoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(19)))), ((int)(((byte)(118)))), ((int)(((byte)(188)))));
             this.projNumDrp.selectedIndex = -1;
-            this.projNumDrp.Size = new System.Drawing.Size(170, 31);
+            this.projNumDrp.Size = new System.Drawing.Size(320, 31);
             this.projNumDrp.TabIndex = 5;
             this.projNumDrp.onItemSelected += new System.EventHandler(this.ProjNumDrp_onItemSelected);
             // 
@@ -104,16 +104,15 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.LightGray;
-            this.ClientSize = new System.Drawing.Size(352, 179);
+            this.ClientSize = new System.Drawing.Size(484, 179);
             this.Controls.Add(this.projNumDrp);
             this.Controls.Add(this.btn_OUT);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btn_IN);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(368, 218);
-            this.MinimizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(368, 218);
+            this.MaximumSize = new System.Drawing.Size(500, 218);
+            this.MinimumSize = new System.Drawing.Size(500, 218);
             this.Name = "MainForm";
             this.Text = "Project Time Clocker";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);

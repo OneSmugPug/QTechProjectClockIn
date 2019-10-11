@@ -221,12 +221,12 @@ namespace QTechProjectClockIn
             using (SqlConnection conn = DBUtils.GetDBConnection())
             {
                 conn.Open();
-                SqlDataAdapter da = new SqlDataAdapter("SELECT Project_ID FROM Projects", conn);
+                SqlDataAdapter da = new SqlDataAdapter("SELECT Timekeeping_Data FROM Projects", conn);
                 dt = new DataTable();
                 da.Fill(dt);
                 foreach (DataRow row in dt.Rows)
                 {
-                    projNumDrp.AddItem(row["Project_ID"].ToString());
+                    projNumDrp.AddItem(row["Timekeeping_Data"].ToString());
                 }
             }
         }
