@@ -67,11 +67,11 @@ namespace QTechProjectClockIn
             }
             else
             {
-                curEntry = new Entry(projNumDrp.selectedValue);
+                curEntry = new Entry(projNumDrp.SelectedItem.ToString());
                 entries.Add(curEntry);
                 dateNow = DateTime.Now.ToString("ddMMyyyy");
                 filePath = @"C:\Project Clocker Logs\" + dateNow + ".txt";
-                curEntry.InInfo = "IN  " + DateTime.Now.ToString("HH:mm") + " " + projNumDrp.selectedValue;
+                curEntry.InInfo = "IN  " + DateTime.Now.ToString("HH:mm") + " " + projNumDrp.SelectedItem.ToString();
                 curEntry.IsOpen = true;
                 StreamWriter sb = new StreamWriter(filePath, true);
                 sb.WriteLine(curEntry.InInfo);
@@ -94,7 +94,7 @@ namespace QTechProjectClockIn
             foreach (Entry item in entries)
             {
                 string[] strArr = item.InInfo.Trim().Split(null);
-                if (strArr.Last().Equals(projNumDrp.selectedValue))
+                if (strArr.Last().Equals(projNumDrp.SelectedItem.ToString()))
                 {
                     curEntry = item;
                 }
@@ -102,7 +102,7 @@ namespace QTechProjectClockIn
 
             if (curEntry != null)
             {
-                curEntry.OutInfo = "OUT " + DateTime.Now.ToString("HH:mm") + " " + projNumDrp.selectedValue;
+                curEntry.OutInfo = "OUT " + DateTime.Now.ToString("HH:mm") + " " + projNumDrp.SelectedItem.ToString();
                 curEntry.IsOpen = false;
                 StreamWriter sb = new StreamWriter(filePath, true);
                 sb.WriteLine(curEntry.OutInfo);
@@ -116,7 +116,7 @@ namespace QTechProjectClockIn
             else
             {
                 StreamWriter sb = new StreamWriter(filePath, true);
-                sb.WriteLine("OUT " + DateTime.Now.ToString("HH:mm") + " " + projNumDrp.selectedValue);
+                sb.WriteLine("OUT " + DateTime.Now.ToString("HH:mm") + " " + projNumDrp.SelectedItem.ToString());
                 sb.Close();
                 btn_OUT.Enabled = false;
                 btn_OUT.FlatAppearance.BorderColor = Color.LightGray;
@@ -226,7 +226,7 @@ namespace QTechProjectClockIn
                 da.Fill(dt);
                 foreach (DataRow row in dt.Rows)
                 {
-                    projNumDrp.AddItem(row["Timekeeping_Data"].ToString());
+                    projNumDrp.Items.Add(row["Timekeeping_Data"].ToString());
                 }
             }
         }
@@ -250,7 +250,7 @@ namespace QTechProjectClockIn
 
             if (curEntry != null)
             {
-                if (curEntry.ProjCode == projNumDrp.selectedValue)
+                if (curEntry.ProjCode == projNumDrp.SelectedItem.ToString())
                 {
                     btn_IN.Enabled = false;
                     btn_IN.FlatAppearance.BorderColor = Color.LightGray;
@@ -265,6 +265,28 @@ namespace QTechProjectClockIn
                     btn_OUT.FlatAppearance.BorderColor = Color.LightGray;
                 }
             }
+        }
+
+        private void ProjNumDrp_MouseEnter(object sender, EventArgs e)
+        {
+            projNumDrp.ForeColor = Color.White;
+            projNumDrp.BackColor = Color.FromArgb(19, 118, 188);
+        }
+
+        private void ProjNumDrp_MouseLeave(object sender, EventArgs e)
+        {
+            projNumDrp.ForeColor = Color.Black;
+            projNumDrp.BackColor = Color.White;
+        }
+
+        private void ProjNumDrp_KeyDown(object sender, KeyEventArgs e)
+        {
+            e.SuppressKeyPress = true;
+        }
+
+        private void ProjNumDrp_KeyUp(object sender, KeyEventArgs e)
+        {
+            e.SuppressKeyPress = false;
         }
     }
 

@@ -32,7 +32,7 @@
             this.btn_IN = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.btn_OUT = new System.Windows.Forms.Button();
-            this.projNumDrp = new Bunifu.Framework.UI.BunifuDropdown();
+            this.projNumDrp = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // btn_IN
@@ -44,9 +44,9 @@
             this.btn_IN.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btn_IN.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btn_IN.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.btn_IN.Location = new System.Drawing.Point(210, 118);
+            this.btn_IN.Location = new System.Drawing.Point(239, 132);
             this.btn_IN.Name = "btn_IN";
-            this.btn_IN.Size = new System.Drawing.Size(70, 30);
+            this.btn_IN.Size = new System.Drawing.Size(108, 35);
             this.btn_IN.TabIndex = 0;
             this.btn_IN.Text = "IN";
             this.btn_IN.UseVisualStyleBackColor = true;
@@ -58,7 +58,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(36, 54);
+            this.label1.Location = new System.Drawing.Point(25, 54);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(110, 17);
             this.label1.TabIndex = 2;
@@ -73,9 +73,9 @@
             this.btn_OUT.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btn_OUT.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btn_OUT.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.btn_OUT.Location = new System.Drawing.Point(339, 118);
+            this.btn_OUT.Location = new System.Drawing.Point(353, 132);
             this.btn_OUT.Name = "btn_OUT";
-            this.btn_OUT.Size = new System.Drawing.Size(70, 30);
+            this.btn_OUT.Size = new System.Drawing.Size(108, 35);
             this.btn_OUT.TabIndex = 4;
             this.btn_OUT.Text = "OUT";
             this.btn_OUT.UseVisualStyleBackColor = true;
@@ -85,19 +85,17 @@
             // 
             // projNumDrp
             // 
-            this.projNumDrp.BackColor = System.Drawing.Color.Transparent;
-            this.projNumDrp.BorderRadius = 3;
-            this.projNumDrp.DisabledColor = System.Drawing.Color.Gray;
-            this.projNumDrp.ForeColor = System.Drawing.Color.Black;
-            this.projNumDrp.Items = new string[0];
-            this.projNumDrp.Location = new System.Drawing.Point(152, 50);
+            this.projNumDrp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.projNumDrp.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.projNumDrp.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.projNumDrp.FormattingEnabled = true;
+            this.projNumDrp.Location = new System.Drawing.Point(141, 51);
             this.projNumDrp.Name = "projNumDrp";
-            this.projNumDrp.NomalColor = System.Drawing.Color.White;
-            this.projNumDrp.onHoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(19)))), ((int)(((byte)(118)))), ((int)(((byte)(188)))));
-            this.projNumDrp.selectedIndex = -1;
-            this.projNumDrp.Size = new System.Drawing.Size(320, 31);
-            this.projNumDrp.TabIndex = 5;
-            this.projNumDrp.onItemSelected += new System.EventHandler(this.ProjNumDrp_onItemSelected);
+            this.projNumDrp.Size = new System.Drawing.Size(320, 24);
+            this.projNumDrp.TabIndex = 6;
+            this.projNumDrp.SelectedIndexChanged += new System.EventHandler(this.ProjNumDrp_onItemSelected);
+            this.projNumDrp.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ProjNumDrp_KeyDown);
+            this.projNumDrp.KeyUp += new System.Windows.Forms.KeyEventHandler(this.ProjNumDrp_KeyUp);
             // 
             // MainForm
             // 
@@ -127,7 +125,7 @@
         private System.Windows.Forms.Button btn_IN;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btn_OUT;
-        private Bunifu.Framework.UI.BunifuDropdown projNumDrp;
+        private System.Windows.Forms.ComboBox projNumDrp;
     }
 }
 
